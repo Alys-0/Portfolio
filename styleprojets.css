@@ -1,0 +1,498 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Space Grotesk", sans-serif;
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  color: white;
+  overflow-x: hidden;
+}
+
+/* BACKGROUND BLOBS */
+
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+}
+
+.blob {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  filter: blur(160px);
+}
+
+.blob1 {
+  background: rgba(168,85,247,0.3);
+  top: -150px;
+  left: -150px;
+}
+
+.blob2 {
+  background: rgba(236,72,153,0.3);
+  bottom: -150px;
+  right: -150px;
+}
+
+.blob3 {
+  background: rgba(34,211,238,0.3);
+  top: 50%;
+  left: 50%;
+}
+
+
+/* =========================================
+NAVBAR
+========================================= */
+
+nav {
+  position: fixed;
+
+  top: 0;
+  width: 100%;
+
+  padding: 20px 0;
+
+  z-index: 999;
+
+  background: rgba(0, 0, 0, 0.4);
+
+  backdrop-filter: blur(12px);
+}
+
+nav ul {
+  display: flex;
+
+  justify-content: center;
+
+  gap: 40px;
+
+  list-style: none;
+}
+
+nav a {
+  color: #dbe4ee;
+
+  text-decoration: none;
+
+  font-weight: 600;
+
+  transition: 0.3s;
+}
+
+nav a:hover {
+  color: #60a5fa;
+}
+
+/* =========================================
+SECTION
+========================================= */
+
+.projects-section {
+  padding: 160px 6% 100px;
+}
+
+/* =========================================
+TITLE
+========================================= */
+
+.main-title {
+  text-align: center;
+  font-size: 5rem;
+  margin-bottom: 90px;
+  animation: titleZoom 4s ease infinite alternate;
+}
+
+@keyframes titleZoom {
+  from {
+    transform: scale(1);
+
+    letter-spacing: 0px;
+  }
+
+  to {
+    transform: scale(1.06);
+
+    letter-spacing: 5px;
+  }
+}
+
+
+/* =========================================
+GRID
+========================================= */
+
+.grid {
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+
+  gap: 40px;
+}
+
+/* =========================================
+CARD
+========================================= */
+
+.card {
+  position: relative;
+  height: 500px;
+  border-radius: 28px;
+  overflow: hidden;
+  cursor: pointer;
+
+  transition: transform 0.6s ease, box-shadow 0.6s ease;
+  isolation: isolate;
+}
+
+.card:hover {
+  transform: scale(1.04) translateY(-10px);
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7);
+}
+
+/* IMAGE */
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+
+  transition: transform 1s ease;
+}
+
+.card:hover .card-image {
+  transform: scale(1.12);
+}
+
+/* DARK OVERLAY */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.65),
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.85)
+  );
+
+  z-index: 1;
+}
+
+/* TITLE EN HAUT */
+.card-title {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  right: 25px;
+  letter-spacing: 1px;
+  z-index: 2;
+  font-size: 2rem;
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 800;
+  color: white;
+  text-shadow: 0 8px 25px rgba(0, 0, 0, 0.9);
+  transition: transform 0.4s ease;
+}
+
+.card:hover .card-title {
+  transform: translateY(-5px);
+}
+
+/* =========================================
+OVERLAY
+========================================= */
+
+.overlay {
+  position: absolute;
+
+  inset: 0;
+
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+
+  z-index: 1;
+}
+
+/* =========================================
+BOTTOM SHADOW
+========================================= */
+
+.card::after {
+  content: '';
+
+  position: absolute;
+
+  inset: 0;
+
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent 60%);
+
+  z-index: 1;
+}
+
+/* =========================================
+CONTENT
+========================================= */
+
+.content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 35px;
+}
+
+.content h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 5px 20px rgba(0, 0, 0, 0.8);
+  transform: translateY(20px);
+  opacity: 0.9;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.card:hover .content h2 {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* =========================================
+VIEWER
+========================================= */
+
+.viewer {
+  position: fixed;
+  inset: 0;
+
+  z-index: 9999;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  background: rgba(0, 0, 0, 0.95);
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  overflow: hidden;
+
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.viewer.active {
+  opacity: 1;
+
+  visibility: visible;
+}
+
+/* =========================================
+BACKGROUND ANIMATION
+========================================= */
+
+.bg-animation {
+  position: absolute;
+
+  inset: -20%;
+
+  background: radial-gradient(circle, rgba(96, 165, 250, 0.25), transparent);
+
+  filter: blur(120px);
+
+  animation: rotateBg 20s linear infinite, pulseBg 8s ease infinite;
+}
+
+@keyframes rotateBg {
+  from {
+    transform: rotate(0deg) scale(1);
+  }
+
+  to {
+    transform: rotate(360deg) scale(1.3);
+  }
+}
+
+@keyframes pulseBg {
+  0% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.5;
+  }
+}
+
+/* =========================================
+VIEWER CONTENT
+========================================= */
+
+.viewer-content {
+  position: relative;
+
+  z-index: 10;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  overflow: hidden;
+}
+
+/* =========================================
+VIEWER TITLE
+========================================= */
+
+#viewer-title {
+  text-align: center;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 5rem;
+  margin-bottom: 60px;
+  animation: textZoom 7s ease infinite alternate;
+}
+
+@keyframes textZoom {
+  from {
+    transform: scale(1);
+
+    opacity: 0.8;
+  }
+
+  to {
+    transform: scale(1.08);
+
+    opacity: 1;
+  }
+}
+
+/* =========================================
+CAROUSEL
+========================================= */
+
+.carousel-wrapper {
+  overflow: hidden;
+}
+
+.carousel-track {
+  display: flex;
+
+  gap: 40px;
+
+  width: max-content;
+
+  animation: autoScroll 30s linear infinite;
+}
+
+.carousel-track img {
+  width: 650px;
+
+  height: 380px;
+
+  object-fit: cover;
+
+  border-radius: 30px;
+
+  transition: transform 0.5s ease;
+}
+
+.carousel-track img:hover {
+  transform: scale(1.08);
+}
+
+@keyframes autoScroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* =========================================
+CLOSE BUTTON
+========================================= */
+
+.close {
+  position: absolute;
+
+  top: 30px;
+  right: 40px;
+  z-index: 30;
+  font-size: 50px;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.close:hover {
+  transform: rotate(180deg) scale(1.2);
+}
+
+/* =========================================
+FOOTER
+========================================= */
+
+footer {
+  text-align: center;
+
+  padding: 40px;
+
+  color: #94a3b8;
+}
+
+/* =========================================
+RESPONSIVE
+========================================= */
+
+@media (max-width: 900px) {
+  .main-title {
+    font-size: 3rem;
+    font-family: "Montserrat", sans-serif;
+    color: white;
+    letter-spacing: 3px;
+    
+    font-weight: 700;
+    text-transform: uppercase;
+    text-shadow:
+    0.08em 0.08em 0 rgba(0,0,0,0.2),
+        0.16em 0.16em 0 rgba(0,0,0,0.25),
+        0.24em 0.24em 0 rgba(0,0,0,0.3),
+        0.32em 0.32em 0 rgba(0,0,0,0.35),
+        0.45em 0.45em 0 rgba(0,0,0,0.4),
+        0.6em 0.6em 1.2em rgba(0,0,0,0.7);
+    }
+    
+
+  #viewer-title {
+    font-size: 3rem;
+  }
+
+  .carousel-track img {
+    width: 320px;
+
+    height: 220px;
+  }
+}

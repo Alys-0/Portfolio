@@ -1,0 +1,199 @@
+html {
+  scroll-behavior: smooth;
+}
+
+/* GLOBAL */
+body {
+  margin: 0;
+  font-family: "Space Grotesk", sans-serif;
+  color: #f3f4f6;
+  background: #0b0b12;
+  overflow-x: hidden;
+}
+
+/* BACKGROUND BLOBS */
+
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+}
+
+.blob {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  filter: blur(160px);
+}
+
+.blob1 {
+  background: rgba(168,85,247,0.3);
+  top: -150px;
+  left: -150px;
+}
+
+.blob2 {
+  background: rgba(236,72,153,0.3);
+  bottom: -150px;
+  right: -150px;
+}
+
+.blob3 {
+  background: rgba(34,211,238,0.3);
+  top: 50%;
+  left: 50%;
+}
+
+/* NAVBAR */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(10, 15, 28, 0.9);
+  backdrop-filter: blur(10px);
+  padding: 15px 0;
+  z-index: 1000;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+
+nav li {
+  margin: 0 20px;
+}
+
+nav a {
+  color: #e5e7eb;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  color: #60a5fa;
+}
+
+/* HEADER */
+
+header {
+  text-align: center;
+  padding: 120px 20px 60px;
+  background: linear-gradient(90deg, #2563eb, #9333ea);
+  color: white;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2.5em;
+}
+
+header p {
+  opacity: 0.9;
+}
+
+.signature {
+  font-family: 'Parisienne', cursive;
+  font-size: 3em;
+  color: white;
+  letter-spacing: 2px;
+}
+
+/* SECTIONS */
+
+section {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 25px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: 0.3s;
+}
+
+section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* TITRES */
+
+h2 { 
+  font-family: "Cormorant Garamond", serif;
+  font-size: 2.05em;
+  color: #ffffff;
+}
+
+h3 {
+  color: #a78bfa;
+}
+
+/* TEXTE */
+
+p {
+  line-height: 1.6;
+}
+
+/* LISTES */
+
+ul {
+  padding-left: 20px;
+}
+
+/* CARDS */
+
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+/* IMAGES */
+
+img {
+  width: 100%;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+/* COMPETENCES */
+
+.skills {
+  margin-top: 10px;
+}
+
+.skills span {
+  display: inline-block;
+  background: linear-gradient(90deg, #2563eb, #9333ea);
+  padding: 8px 12px;
+  border-radius: 20px;
+  margin: 5px;
+  font-size: 0.9em;
+}
+
+/* LIENS */
+
+a {
+  color: #38bdf8;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* FOOTER */
+
+footer {
+  text-align: center;
+  padding: 20px;
+  opacity: 0.7;
+}
