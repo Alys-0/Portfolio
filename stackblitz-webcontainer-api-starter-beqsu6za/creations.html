@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Créations</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        background: #05070f;
+        color: #edf2f7;
+        font-family: 'Segoe UI', sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background: radial-gradient(
+            circle at top,
+            rgba(96, 165, 250, 0.12),
+            transparent 30%
+          ),
+          #05070f;
+      }
+
+      header {
+        padding: 30px 24px 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        backdrop-filter: blur(14px);
+        background: rgba(5, 7, 15, 0.82);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      header h1 {
+        margin: 0;
+        font-size: clamp(1.9rem, 2.4vw, 3rem);
+        line-height: 1.05;
+      }
+
+      header a {
+        color: #7c3aed;
+        text-decoration: none;
+        font-weight: 700;
+        border: 1px solid rgba(124, 58, 237, 0.42);
+        padding: 11px 18px;
+        border-radius: 999px;
+        transition: transform 0.2s ease, background 0.2s ease;
+      }
+
+      header a:hover {
+        transform: translateY(-1px);
+        background: rgba(124, 58, 237, 0.15);
+      }
+
+      .lead {
+        padding: 0 24px 24px;
+        max-width: 860px;
+        margin: 0 auto;
+        color: #cbd5e1;
+        line-height: 1.8;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 22px;
+        padding: 0 24px 40px;
+        max-width: 1240px;
+        margin: 0 auto;
+      }
+
+      .card {
+        min-height: 260px;
+        border-radius: 28px;
+        overflow: hidden;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.08),
+          rgba(255, 255, 255, 0.02)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 18px 60px rgba(0, 0, 0, 0.15);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: transform 0.2s ease, border-color 0.2s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-6px);
+        border-color: rgba(124, 58, 237, 0.45);
+      }
+
+      .card .preview {
+        flex: 1;
+        background: linear-gradient(
+          135deg,
+          rgba(124, 58, 237, 0.24),
+          rgba(59, 130, 246, 0.15)
+        );
+        padding: 18px;
+        display: grid;
+        place-items: center;
+        color: #eef2ff;
+        font-weight: 700;
+        font-size: 1.05rem;
+        text-align: center;
+        letter-spacing: 0.02em;
+      }
+
+      .card .meta {
+        padding: 18px 20px 24px;
+      }
+
+      .card h3 {
+        margin: 0 0 10px;
+        font-size: 1.1rem;
+        line-height: 1.3;
+      }
+
+      .card p {
+        margin: 0;
+        font-size: 0.96rem;
+        color: #cbd5e1;
+        line-height: 1.6;
+      }
+
+      .card .tags {
+        margin-top: 16px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .card .tag {
+        font-size: 0.82rem;
+        padding: 7px 11px;
+        border-radius: 999px;
+        background: rgba(124, 58, 237, 0.14);
+        color: #e0e7ff;
+      }
+
+      footer {
+        padding: 24px;
+        text-align: center;
+        color: rgba(203, 213, 225, 0.65);
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div>
+        <p
+          style="
+            margin: 0;
+            font-size: 0.92rem;
+            color: #94a3b8;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+          "
+        >
+          Inspiration
+        </p>
+        <h1 id="pageTitle">Créations</h1>
+      </div>
+      <a href="artistique.html">Retour au globe</a>
+    </header>
+
+    <p class="lead" id="pageLead">
+      Découvrez une sélection de créations inspirées par cette région.
+    </p>
+
+    <section class="grid" id="cardsGrid">
+      <article class="card">
+        <div class="preview">Moodboard 1</div>
+        <div class="meta">
+          <h3>Exploration visuelle</h3>
+          <p>
+            Palette de couleurs et formes organiques inspirées du pays choisi.
+          </p>
+          <div class="tags">
+            <span class="tag">Design</span><span class="tag">Illustration</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="preview">Moodboard 2</div>
+        <div class="meta">
+          <h3>Textures & Lumière</h3>
+          <p>
+            Ambiances lumineuses et textures mutines pour un univers singulier.
+          </p>
+          <div class="tags">
+            <span class="tag">Photo</span><span class="tag">Art digital</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="preview">Moodboard 3</div>
+        <div class="meta">
+          <h3>Carte d’inspiration</h3>
+          <p>Objets, motifs et détails qui racontent une histoire visuelle.</p>
+          <div class="tags">
+            <span class="tag">Créatif</span><span class="tag">Projet</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="preview">Moodboard 4</div>
+        <div class="meta">
+          <h3>Ambiance & récit</h3>
+          <p>
+            Visuels pensés comme une collection de souvenirs et d’inspirations.
+          </p>
+          <div class="tags">
+            <span class="tag">Inspiration</span
+            ><span class="tag">Moodboard</span>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <footer>
+      Mes créations sont organisées comme dans un tableau d’inspiration pour
+      chaque pays.
+    </footer>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const country = params.get('country') || 'mon pays';
+      document.getElementById(
+        'pageTitle'
+      ).textContent = `Créations • ${country}`;
+      document.getElementById(
+        'pageLead'
+      ).textContent = `Découvrez une sélection de créations inspirées par ${country}.`;
+    </script>
+  </body>
+</html>
