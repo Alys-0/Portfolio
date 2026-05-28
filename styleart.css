@@ -5,14 +5,10 @@
 }
 
 body {
-
-  font-family: "Segoe UI", sans-serif;
-  background:
-    radial-gradient(circle at top, #0f172a, #020617);
-  color: white;
+  font-family: 'Space Grotesk', sans-serif;
+  background: #010322;
+  color: rgb(255, 255, 255);
   overflow-x: hidden;
-  min-height: 100vh;
-  position: relative;
 }
 
 /* BACKGROUND BLOBS */
@@ -32,55 +28,61 @@ body {
 }
 
 .blob1 {
-  background: rgba(168,85,247,0.3);
+  background: rgba(10, 101, 107, 0.445);
   top: -150px;
   left: -150px;
 }
 
 .blob2 {
-  background: rgba(236,72,153,0.3);
+  background: rgba(214, 7, 111, 0.3);
   bottom: -150px;
   right: -150px;
 }
 
 .blob3 {
-  background: rgba(34,211,238,0.3);
+  background: rgba(34, 211, 238, 0.3);
   top: 50%;
   left: 50%;
 }
 
-/* =========================================================
-NAVBAR
-========================================================= */
+.blob4 {
+  background: rgba(59, 130, 246, 0.25);
+  bottom: 20%;
+  left: 30%;
+}
+/* =========================
+   NAV
+========================= */
 
 nav {
-
   position: fixed;
   top: 0;
   width: 100%;
-  padding: 20px 0;
+  padding: 14px 0;
+  background: rgba(13, 13, 53, 0.452);
+  backdrop-filter: blur(18px);
   z-index: 1000;
-  background:
-    rgba(0,0,0,.4);
-  backdrop-filter: blur(12px);
 }
 
 nav ul {
   display: flex;
   justify-content: center;
-  gap: 40px;
+  gap: 28px;
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 nav a {
-  color: #dbe4ee;
+  color: white;
   text-decoration: none;
-  font-weight: 600;
-  transition: .3s;
+  font-size: 0.88rem;
+  opacity: 0.65;
+  transition: 0.3s;
 }
 
 nav a:hover {
-  color: #60a5fa;
+  opacity: 1;
 }
 
 /* =========================================================
@@ -126,7 +128,6 @@ HERO
 }
 
 
-
 @keyframes glow {
 
   from {
@@ -162,15 +163,15 @@ GLOBE SECTION
 }
 
 .globe-section h2 {
-
   position: absolute;
-  top: 40%;
-  left: 18%;
+  top: 36%;
+  left: 40%;
   transform: translateY(-50%);
   z-index: 30;
   font-size: 1.40rem;
   color: white;
   text-align: center;
+  font-family: 'Cormorant Garamond', serif;
   text-shadow:
     0 0 20px rgba(255,255,255,.35);
 }

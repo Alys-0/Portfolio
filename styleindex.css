@@ -6,9 +6,9 @@ html {
 
 body {
   margin: 0;
-  font-family: "Space Grotesk", sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
   color: #f3f4f6;
-  background: #0b0b12;
+  background: radial-gradient(circle at 30% 30%, #064e3b, #022c22 60%, #021412);
   overflow-x: hidden;
 }
 
@@ -16,6 +16,7 @@ body {
 
 .bg {
   position: fixed;
+  mix-blend-mode: screen;
   inset: 0;
   z-index: -1;
 }
@@ -29,21 +30,39 @@ body {
 }
 
 .blob1 {
-  background: rgba(168,85,247,0.3);
+  background: rgba(117, 16, 126, 0.911);
   top: -150px;
   left: -150px;
 }
 
 .blob2 {
-  background: rgba(236,72,153,0.3);
+  background: rgba(231, 61, 18, 0.74);
   bottom: -150px;
   right: -150px;
 }
 
 .blob3 {
-  background: rgba(34,211,238,0.3);
+  background: rgba(243, 228, 19, 0.247);
   top: 50%;
   left: 50%;
+}
+
+.blob4 {
+  background: rgba(134, 95, 11, 0.281);
+  bottom: 20%;
+  left: 30%;
+}
+.blob5 {
+  background: white;
+  opacity: 0.3;
+  top: 9%;
+  right: 10%;
+}
+.blob6 {
+  background: rgba(38, 0, 255, 0.486);
+  opacity: 0.35;
+  top: 8%;
+  right: 5%;
 }
 
 /* NAVBAR */
@@ -51,15 +70,11 @@ nav {
   position: fixed;
   top: 0;
   width: 100%;
-
   opacity: 0;
   transform: translateY(-30px);
-
   background: transparent; /* ✅ invisible sur hero */
   backdrop-filter: none;
-
   transition: 0.5s ease;
-
   z-index: 1000;
   padding: 14px 0;
 }
@@ -67,8 +82,7 @@ nav {
 nav.nav-visible {
   opacity: 1;
   transform: translateY(0);
-
-  background: rgba(10, 10, 20, 0.6);
+  background: rgba(14, 26, 10, 0.45);
   backdrop-filter: blur(15px);
 }
 
@@ -97,41 +111,71 @@ nav a:hover {
 
 .hero {
   min-height: 100vh;
-
+  position: relative;
   display: flex;
   align-items: center;
-
-  padding-left: 80px;
-
-  position: relative;
-
-  /* ✅ COULEUR ALIGNÉE AVEC BODY */
-  background: #0b0b12;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0 80px;
 }
 
-
-.hero::after {
-  content: "";
+/* IMAGE FOND */
+.hero-bg {
   position: absolute;
-  bottom: 0;
-  left: 0;
+  inset: 0;
+  background: url('https://media.cdnws.com/_i/309/fb%7B630%7D-10451/2289/55/plante-bureau.png')
+    center/cover no-repeat;
 
-  width: 100%;
-  height: 400px;
-
-  background: linear-gradient(
-    rgba(0,0,0,0) 0%,
-    #0b0b12 80%
-  );
-
-  pointer-events: none;
+  /* effet fondu pro */
+  filter: brightness(0.58) contrast(1.1);
 }
 
+/* overlay vert pour cohérence */
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
 
-/* HERO TEXT */
+  background: radial-gradient(
+    circle at center,
+    rgba(6, 78, 59, 0.6),
+    #022c22 90%
+  );
+}
 
-.hero-text {
+/* CONTENU */
+.hero-content {
+  position: relative;
   z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 80px;
+  width: 100%;
+  max-width: 1100px;
+}
+
+/* PHOTO */
+
+.hero-photo {
+  position: relative;
+}
+
+.hero-photo img {
+  width: 280px;
+  height: 360px;
+  object-fit: cover;
+
+  border-radius: 20px;
+
+  /* cadre pro */
+  border: 2px solid rgba(255, 255, 255, 0.1);
+
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(255, 255, 255, 0.05);
+}
+
+/* TEXTE */
+.hero-text {
+  max-width: 500px;
 }
 
 .small {
@@ -141,29 +185,39 @@ nav a:hover {
 }
 
 .signature {
-  font-family: "Allura", cursive;
-  font-size: 4.5rem;
+  font-family: 'Allura', cursive;
+  font-size: 5rem;
   margin-top: 10px;
+}
+
+/* EFFET CADRE DESIGNER */
+.hero-photo::before {
+  content: '';
+  position: absolute;
+  inset: -10px;
+
+  border-radius: 24px;
+
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+
+  z-index: -1;
 }
 
 /* PROFIL */
 
 #profile {
-  max-width: 900px;
-  margin: -90px auto 80px;
-  padding: 40px;
-
-  background: rgba(255,255,255,0.04);
-  backdrop-filter: blur(18px);
-  margin: -60px auto 80px; 
+  max-width: 1100px;
+  padding: 100px 40px;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(7px);
+  margin: 10px auto 80px;
   border-radius: 20px;
-  border: 1px solid rgba(255,255,255,0.05);
-
+  border: 1px solid rgba(255, 255, 255, 0.05);
   position: relative;
 }
 
 h2 {
-  font-family: "Cormorant Garamond", serif;
+  font-family: 'Cormorant Garamond', serif;
   font-size: 2.3em;
 }
 

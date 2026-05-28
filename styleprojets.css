@@ -9,8 +9,8 @@ html {
 }
 
 body {
-  font-family: "Space Grotesk", sans-serif;
-  background: radial-gradient(circle at top, #0f172a, #020617);
+  font-family: 'Space Grotesk', sans-serif;
+  background: #022c22;
   color: white;
   overflow-x: hidden;
 }
@@ -32,65 +32,61 @@ body {
 }
 
 .blob1 {
-  background: rgba(168,85,247,0.3);
+  background: rgba(168, 85, 247, 0.3);
   top: -150px;
   left: -150px;
 }
 
 .blob2 {
-  background: rgba(236,72,153,0.3);
+  background: rgba(236, 72, 153, 0.3);
   bottom: -150px;
   right: -150px;
 }
 
 .blob3 {
-  background: rgba(34,211,238,0.3);
+  background: rgba(34, 211, 238, 0.3);
   top: 50%;
   left: 50%;
 }
 
-
-/* =========================================
-NAVBAR
-========================================= */
+.blob4 {
+  background: rgba(59, 130, 246, 0.25);
+  bottom: 20%;
+  left: 30%;
+}
+/* =========================
+   NAV
+========================= */
 
 nav {
   position: fixed;
-
   top: 0;
   width: 100%;
-
-  padding: 20px 0;
-
-  z-index: 999;
-
-  background: rgba(0, 0, 0, 0.4);
-
-  backdrop-filter: blur(12px);
+  padding: 14px 0;
+  background: rgba(14, 26, 10, 0.45);
+  backdrop-filter: blur(18px);
+  z-index: 1000;
 }
 
 nav ul {
   display: flex;
-
   justify-content: center;
-
-  gap: 40px;
-
+  gap: 28px;
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 nav a {
-  color: #dbe4ee;
-
+  color: white;
   text-decoration: none;
-
-  font-weight: 600;
-
+  font-size: 0.88rem;
+  opacity: 0.65;
   transition: 0.3s;
 }
 
 nav a:hover {
-  color: #60a5fa;
+  opacity: 1;
 }
 
 /* =========================================
@@ -109,21 +105,7 @@ TITLE
   text-align: center;
   font-size: 5rem;
   margin-bottom: 90px;
-  animation: titleZoom 4s ease infinite alternate;
-}
 
-@keyframes titleZoom {
-  from {
-    transform: scale(1);
-
-    letter-spacing: 0px;
-  }
-
-  to {
-    transform: scale(1.06);
-
-    letter-spacing: 5px;
-  }
 }
 
 
@@ -198,7 +180,7 @@ CARD
   letter-spacing: 1px;
   z-index: 2;
   font-size: 2rem;
-  font-family: "Cormorant Garamond", serif;
+  font-family: 'Cormorant Garamond', serif;
   font-weight: 800;
   color: white;
   text-shadow: 0 8px 25px rgba(0, 0, 0, 0.9);
@@ -368,7 +350,7 @@ VIEWER TITLE
 
 #viewer-title {
   text-align: center;
-  font-family: "Cormorant Garamond", serif;
+  font-family: 'Cormorant Garamond', serif;
   font-size: 5rem;
   margin-bottom: 60px;
   animation: textZoom 7s ease infinite alternate;
@@ -470,21 +452,17 @@ RESPONSIVE
 @media (max-width: 900px) {
   .main-title {
     font-size: 3rem;
-    font-family: "Montserrat", sans-serif;
+    font-family: 'Montserrat', sans-serif;
     color: white;
     letter-spacing: 3px;
-    
+
     font-weight: 700;
     text-transform: uppercase;
-    text-shadow:
-    0.08em 0.08em 0 rgba(0,0,0,0.2),
-        0.16em 0.16em 0 rgba(0,0,0,0.25),
-        0.24em 0.24em 0 rgba(0,0,0,0.3),
-        0.32em 0.32em 0 rgba(0,0,0,0.35),
-        0.45em 0.45em 0 rgba(0,0,0,0.4),
-        0.6em 0.6em 1.2em rgba(0,0,0,0.7);
-    }
-    
+    text-shadow: 0.08em 0.08em 0 rgba(0, 0, 0, 0.2),
+      0.16em 0.16em 0 rgba(0, 0, 0, 0.25), 0.24em 0.24em 0 rgba(0, 0, 0, 0.3),
+      0.32em 0.32em 0 rgba(0, 0, 0, 0.35), 0.45em 0.45em 0 rgba(0, 0, 0, 0.4),
+      0.6em 0.6em 1.2em rgba(0, 0, 0, 0.7);
+  }
 
   #viewer-title {
     font-size: 3rem;
