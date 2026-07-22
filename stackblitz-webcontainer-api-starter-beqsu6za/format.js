@@ -1,14 +1,17 @@
-let current = 0;
-/* ── sélecteurs ── */
+let smoothProgress = 0;
+
+/* ── Sélecteurs ── */
+const travelerEl = document.getElementById('traveler');
 const timeline = document.querySelector('.timeline');
 const items = document.querySelectorAll('.timeline-item');
 const wavePath = document.getElementById('wavePath');
 const lineEl = document.querySelector('.timeline-line');
+const svg = wavePath ? wavePath.parentElement : null;
+const blobEls = document.querySelectorAll('.blob');
 
 /* =========================
    ALTERNANCE GAUCHE / DROITE
 ========================= */
-
 items.forEach((item, i) => {
   item.classList.add(i % 2 === 0 ? 'left' : 'right');
 });
@@ -16,7 +19,6 @@ items.forEach((item, i) => {
 /* =========================
    COULEURS
 ========================= */
-
 const colors = ['#c084fc', '#f472b6', '#60a5fa', '#34d399', '#fbbf24'];
 
 items.forEach((item, i) => {
@@ -26,43 +28,57 @@ items.forEach((item, i) => {
 /* =========================
    SVG — defs + energyPath
 ========================= */
+if (svg && wavePath) {
+  const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+  defs.innerHTML = `
+    <linearGradient id="energyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#c084fc"/>
+      <stop offset="25%"  stop-color="#f472b6"/>
+      <stop offset="50%"  stop-color="#60a5fa"/>
+      <stop offset="75%"  stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#fbbf24"/>
+    </linearGradient>
+  `;
+  svg.prepend(defs);
 
-const svg = wavePath.parentElement;
-const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-defs.innerHTML = `
-  <linearGradient id="energyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-    <stop offset="0%"   stop-color="#c084fc"/>
-    <stop offset="25%"  stop-color="#f472b6"/>
-    <stop offset="50%"  stop-color="#60a5fa"/>
-    <stop offset="75%"  stop-color="#34d399"/>
-    <stop offset="100%" stop-color="#fbbf24"/>
-  </linearGradient>
-`;
-svg.prepend(defs);
+  const energyPath = document.createElementNS(
+    'http://www.w3.org/2000/svg',
+    'path'
+  );
+  energyPath.setAttribute('id', 'energyPath');
+  svg.appendChild(energyPath);
+}
 
-const energyPath = document.createElementNS(
-  'http://www.w3.org/2000/svg',
-  'path'
-);
-energyPath.setAttribute('id', 'energyPath');
-svg.appendChild(energyPath);
+const energyPath = document.getElementById('energyPath');
 
 /* =========================
-   WAVE
-   Deux fréquences superposées, vitesse douce
+   VIEWBOX DYNAMIQUE
 ========================= */
+function currentHeight() {
+  return lineEl ? lineEl.offsetHeight : 1000;
+}
 
+function syncViewBox() {
+  const h = currentHeight();
+  if (svg) {
+    svg.setAttribute('viewBox', `0 0 100 ${h}`);
+  }
+  return h;
+}
+
+/* =========================
+   WAVE (Vague)
+========================= */
 function xAt(y, t) {
   return (
-    40 +
-    Math.sin(y * 0.011 + t * 0.00085) * 16 +
-    Math.sin(y * 0.028 + t * 0.00055) * 9 +
-    Math.sin(y * 0.055 + t * 0.00035) * 3 /* micro-variation organique */
+    50 +
+    Math.sin(y * 0.011 + t * 0.00032) * 16 +
+    Math.sin(y * 0.028 + t * 0.00021) * 9 +
+    Math.sin(y * 0.055 + t * 0.00013) * 3
   );
 }
 
-function generateWave(t) {
-  const h = lineEl.offsetHeight;
+function generateWave(t, h) {
   const x0 = xAt(0, t);
   let d = `M${x0} 0`;
 
@@ -75,15 +91,11 @@ function generateWave(t) {
 }
 
 /* =========================
-   DOTS — position:absolute dans <body>
-   (retirés de .timeline-item pour éviter
-    tout décalage lié au repère parent)
+   DOTS
 ========================= */
-
 const dotEls = [];
 
 items.forEach((item, i) => {
-  /* supprimer éventuel dot HTML */
   item.querySelector('.dot')?.remove();
 
   const dot = document.createElement('span');
@@ -93,13 +105,11 @@ items.forEach((item, i) => {
   document.body.appendChild(dot);
   dotEls.push(dot);
 
-  /* ── interactions dot ↔ content ── */
   const content = item.querySelector('.content');
   const c = colors[i % colors.length];
 
   if (!content) return;
 
-  /* hover dot → réaction du bloc */
   dot.addEventListener('mouseenter', () => {
     content.style.transform = 'scale(1.045) translateY(-3px)';
     content.style.boxShadow = `0 0 36px color-mix(in srgb,${c} 32%,transparent)`;
@@ -111,7 +121,6 @@ items.forEach((item, i) => {
     content.style.borderColor = '';
   });
 
-  /* hover content → réaction du dot */
   content.addEventListener('mouseenter', () => {
     if (!dot.matches(':hover')) {
       dot.style.width = '14px';
@@ -130,209 +139,198 @@ items.forEach((item, i) => {
 
 /* =========================
    PLACE DOTS
-   Calcul en coordonnées absolues dans la page.
-   Ratio = centre vertical de l'item / hauteur SVG (viewBox)
-   point = getPointAtLength sur wavePath
-   scaleX/scaleY = conversion viewBox → px écran
 ========================= */
-
 function placeDots() {
+  if (!lineEl || !wavePath) return;
+
   const lineRect = lineEl.getBoundingClientRect();
   const pathLen = wavePath.getTotalLength();
   const svgW = lineEl.offsetWidth;
   const svgH = lineEl.offsetHeight;
-  const vbH = lineEl.offsetHeight; /* viewBox height = timeline height */
-  const scaleX = svgW / 80; /* viewBox width = 80 (centre à 40) */
-  const scaleY = svgH / vbH;
+
+  if (!pathLen || !svgH) return;
 
   items.forEach((item, i) => {
     const dot = dotEls[i];
     if (!dot) return;
 
-    /* centre vertical de l'item dans le repère de .timeline */
     const itemCy = item.offsetTop + item.offsetHeight / 2;
-    /* décalage du haut de .timeline-line dans .timeline */
-    const lineTy = lineEl.offsetTop;
-    const relY = itemCy - lineTy;
-    const ratio = Math.max(0, Math.min(relY / vbH, 1));
+    const relY = itemCy - lineEl.offsetTop;
+    const ratio = Math.max(0, Math.min(relY / svgH, 1));
 
-    /* point sur la courbe SVG */
     const pt = wavePath.getPointAtLength(pathLen * ratio);
 
-    /* conversion en coordonnées page */
-    const pageX = lineRect.left + window.scrollX + pt.x * scaleX;
-    const pageY = lineRect.top + window.scrollY + pt.y * scaleY;
+    const pageX = lineRect.left + window.scrollX + (pt.x / 100) * svgW;
+    const pageY = lineRect.top + window.scrollY + pt.y;
 
     dot.style.left = `${pageX}px`;
     dot.style.top = `${pageY}px`;
   });
 }
 
-/* =========================
-   SCROLL — énergie + activation
-========================= */
+/* ==============================================
+   MÉDUSE EN NAGE LIBRE EN ARRIÈRE-PLAN
+============================================== */
+let isHovered = false;
 
-function updateEnergy() {
-  const rect = timeline.getBoundingClientRect();
-  const top = rect.top + window.scrollY;
-  const height = timeline.offsetHeight;
-  const vbH = height;
-  const lineTy = lineEl.offsetTop;
+let jellyX = window.innerWidth * 0.2;
+let jellyY = window.innerHeight * 0.3;
+let targetX = jellyX;
+let targetY = jellyY;
+let smoothAngle = 0;
 
-  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-
-  const scrollRatio = window.scrollY / maxScroll;
-
-  /* progression plus généreuse */
-  const rawProg = (window.scrollY - top + window.innerHeight * 0.15) / height;
-
-  /* boost fin de timeline */
-  
-  const start = top - window.innerHeight * 0.35;
-  const end = top + height - window.innerHeight * 0.35;
-
-let progress = (window.scrollY - start) / (end - start);
-progress = Math.max(0, Math.min(progress, 1));
-
-
-  const clamped = Math.max(0, Math.min(rawProg, 1));
-
-  const total = wavePath.getTotalLength();
-
-  /* longueur visible du flux (segment d’encre) */
-  const visibleLength = total * 0.08; // ← ajuste ici (0.14 à 0.18)
-
-  /* position du flux */
-  const current = progress * total;
-
-  /* segment court + déplacement */
-  energyPath.style.strokeDasharray = `${visibleLength} ${total}`;
-  energyPath.style.strokeDashoffset = total - current;
-  
-if (progress >= 1) {
-  energyPath.style.strokeDashoffset = 0;
+function pickNewTarget() {
+  const margin = 100;
+  targetX = margin + Math.random() * (window.innerWidth - margin * 2);
+  targetY = margin + Math.random() * (window.innerHeight - margin * 2);
 }
 
-  /* glow de l'energyPath selon le dernier dot actif */
-  let lastActive = -1;
-  items.forEach((item, i) => {
-    const cy = item.offsetTop + item.offsetHeight / 2;
-    const ratio = Math.max(0, Math.min((cy - lineTy) / vbH, 1));
-    if (clamped >= ratio - 0.03) lastActive = i;
-  });
-  if (lastActive >= 0) {
-    const c = colors[lastActive % colors.length];
-    energyPath.style.filter = `drop-shadow(0 0 5px ${c}) drop-shadow(0 0 14px ${c})`;
-  }
+pickNewTarget();
 
-  /* activation items + dots */
-  items.forEach((item, i) => {
-    const dot = dotEls[i];
-    const cy = item.offsetTop + item.offsetHeight / 2;
-    const ratio = Math.max(0, Math.min((cy - lineTy) / vbH, 1));
-    const now = clamped >= ratio - 0.03;
-    const was = item.classList.contains('active');
+function updateTravelerAuto(t) {
+  if (!isHovered && travelerEl) {
+    const dx = targetX - jellyX;
+    const dy = targetY - jellyY;
+    const dist = Math.hypot(dx, dy);
 
-    if (now !== was) {
-      item.classList.toggle('active', now);
-      if (dot) dot.classList.toggle('active', now);
+    if (dist < 50) {
+      pickNewTarget();
     }
-  });
 
-  items.forEach((item) => {
-    item.style.cursor = 'pointer';
+    // Déplacement fluide en eau douce
+    jellyX += dx * 0.0025;
+    jellyY += dy * 0.0025;
 
-    item.addEventListener('click', () => {
-      const link = item.dataset.link;
-      if (link) {
-        window.location.href = link;
+    // Directivité de la tête
+    const angleRad = Math.atan2(dy, dx);
+    const targetAngle = angleRad * (180 / Math.PI) - 90;
+
+    smoothAngle += (targetAngle - smoothAngle) * 0.03;
+    const wobble = Math.sin(t * 0.0016) * 4;
+
+    travelerEl.style.transform = `
+      translate3d(${jellyX}px, ${jellyY}px, 0)
+      translate(-50%, -30%)
+      rotate(${(smoothAngle + wobble).toFixed(2)}deg)
+    `;
+
+    /* Animation continue de la traînée lumineuse */
+    if (wavePath && energyPath) {
+      const total = wavePath.getTotalLength();
+      if (total) {
+        const progress = (t * 0.00015) % 1;
+        const trailLength = 90;
+        const current = progress * total;
+        energyPath.style.strokeDasharray = `${trailLength} ${total}`;
+        energyPath.style.strokeDashoffset = `${-(current - trailLength)}`;
       }
+    }
+
+    /* Activation des dots au scroll */
+    const scrollRatio =
+      window.scrollY /
+      (document.documentElement.scrollHeight - window.innerHeight || 1);
+    items.forEach((item, i) => {
+      const dot = dotEls[i];
+      const itemCy = item.offsetTop + item.offsetHeight / 2;
+      const ratio = itemCy / document.documentElement.scrollHeight;
+      const active = Math.abs(scrollRatio - ratio) < 0.1;
+
+      item.classList.toggle('active', active);
+      dot?.classList.toggle('active', active);
+    });
+  }
+}
+
+/* ==============================================
+   PAUSE AU HOVER (MÉDUSE + DOTS + BLOCS + NAV)
+============================================== */
+function setupHoverEvents() {
+  const targets = document.querySelectorAll('.content, .dot, nav.nav-tool a');
+  targets.forEach((target) => {
+    target.addEventListener('mouseenter', () => {
+      isHovered = true;
+      if (travelerEl) travelerEl.classList.add('paused');
+    });
+    target.addEventListener('mouseleave', () => {
+      isHovered = false;
+      if (travelerEl) travelerEl.classList.remove('paused');
     });
   });
 }
+setupHoverEvents();
 
 /* =========================
-   LUCIOLES — PANDORA / EYWA
-   Double couche : halo radial flou + cœur brillant
-   Position absolue en px sur toute la hauteur de la page
-   Z-index varié → devant et derrière le contenu
+   APPARITION AU SCROLL (.reveal)
 ========================= */
+const revealObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.25, rootMargin: '0px 0px -60px 0px' }
+);
 
+document
+  .querySelectorAll('.reveal')
+  .forEach((el) => revealObserver.observe(el));
+
+/* =========================
+   PARALLAX DE BACKGROUND
+========================= */
+function updateParallax() {
+  const y = window.scrollY;
+  blobEls.forEach((blob, i) => {
+    const speed = i % 2 === 0 ? 0.08 : 0.05;
+    blob.style.transform = `translateY(${y * speed}px)`;
+  });
+}
+window.addEventListener('scroll', updateParallax, { passive: true });
+
+/* =========================
+   LUCIOLES
+========================= */
 const floatAnims = ['float-a', 'float-b', 'float-c', 'float-d'];
 
 const orbPalette = [
-  {
-    core: 'rgba(115, 245, 255',
-    halo: 'rgba(25,  195, 245',
-  } /* cyan eau       */,
-  {
-    core: 'rgba(155, 255, 205',
-    halo: 'rgba(35,  215, 140',
-  } /* vert teal      */,
-  {
-    core: 'rgba(205, 125, 255',
-    halo: 'rgba(115,  35, 245',
-  } /* violet         */,
-  {
-    core: 'rgba(255, 155, 230',
-    halo: 'rgba(225,  55, 195',
-  } /* rose magenta   */,
-  {
-    core: 'rgba( 90, 255, 248',
-    halo: 'rgba( 10, 205, 225',
-  } /* turquoise      */,
-  {
-    core: 'rgba(255, 248,  75',
-    halo: 'rgba(170, 135,   8',
-  } /* jaune bio      */,
-  {
-    core: 'rgba(120, 255, 140',
-    halo: 'rgba( 20, 205,  65',
-  } /* vert fluo      */,
-  {
-    core: 'rgba( 70, 195, 255',
-    halo: 'rgba( 10, 115, 235',
-  } /* bleu profond   */,
-  {
-    core: 'rgba(255, 205, 110',
-    halo: 'rgba(200,  95,  12',
-  } /* ambre chaud    */,
-  {
-    core: 'rgba(195, 255, 175',
-    halo: 'rgba( 75, 225,  95',
-  } /* menthe         */,
-  {
-    core: 'rgba(255, 140, 180',
-    halo: 'rgba(215,  45, 120',
-  } /* rose corail    */,
-  {
-    core: 'rgba(140, 220, 255',
-    halo: 'rgba( 40, 145, 230',
-  } /* bleu ciel      */,
+  { core: 'rgba(115, 245, 255', halo: 'rgba(25,  195, 245' },
+  { core: 'rgba(155, 255, 205', halo: 'rgba(35,  215, 140' },
+  { core: 'rgba(205, 125, 255', halo: 'rgba(115,  35, 245' },
+  { core: 'rgba(255, 155, 230', halo: 'rgba(225,  55, 195' },
+  { core: 'rgba( 90, 255, 248', halo: 'rgba( 10, 205, 225' },
+  { core: 'rgba(255, 248,  75', halo: 'rgba(170, 135,   8' },
+  { core: 'rgba(120, 255, 140', halo: 'rgba( 20, 205,  65' },
+  { core: 'rgba( 70, 195, 255', halo: 'rgba( 10, 115, 235' },
+  { core: 'rgba(255, 205, 110', halo: 'rgba(200,  95,  12' },
+  { core: 'rgba(195, 255, 175', halo: 'rgba( 75, 225,  95' },
+  { core: 'rgba(255, 140, 180', halo: 'rgba(215,  45, 120' },
+  { core: 'rgba(140, 220, 255', halo: 'rgba( 40, 145, 230' },
 ];
 
 const zLayers = [-4, -3, -2, -1, 0, 2, 5, 8, 14, 20];
 
-function createFireflies(count = 10) {
-  /* on attend que le DOM soit complet pour mesurer la hauteur */
+function createFireflies(count = 14) {
   const pageH = document.documentElement.scrollHeight;
 
   for (let k = 0; k < count; k++) {
     const pal = orbPalette[Math.floor(Math.random() * orbPalette.length)];
-    const coreSize = 1.5 + Math.random() * 5.5; /* 1.5 – 7 px        */
-    const haloMult = 7 + Math.random() * 12; /* halo = 7–19× core */
+    const coreSize = 1.5 + Math.random() * 5.5;
+    const haloMult = 7 + Math.random() * 12;
     const haloSize = coreSize * haloMult;
-    const blurR = 0.38 + Math.random() * 0.22; /* blur ratio        */
+    const blurR = 0.38 + Math.random() * 0.22;
     const anim = floatAnims[Math.floor(Math.random() * floatAnims.length)];
-    const dur = 9 + Math.random() * 20; /* 9–29 s            */
+    const dur = 9 + Math.random() * 20;
     const delay = -(Math.random() * dur);
-    const pDur = 2.2 + Math.random() * 5; /* pulse 2.2–7.2 s   */
+    const pDur = 2.2 + Math.random() * 5;
     const pDelay = -(Math.random() * pDur);
     const xPct = Math.random() * 100;
     const yPx = Math.random() * pageH;
     const z = zLayers[Math.floor(Math.random() * zLayers.length)];
 
-    /* ── HALO ── */
     const halo = document.createElement('div');
     halo.classList.add('firefly');
     halo.style.cssText = `
@@ -347,13 +345,10 @@ function createFireflies(count = 10) {
       z-index:${z};
       animation:
         ${anim} ${dur.toFixed(1)}s ${delay.toFixed(1)}s ease-in-out infinite,
-        orb-pulse ${pDur.toFixed(1)}s ${pDelay.toFixed(
-      1
-    )}s ease-in-out infinite;
+        orb-pulse ${pDur.toFixed(1)}s ${pDelay.toFixed(1)}s ease-in-out infinite;
     `;
     document.body.appendChild(halo);
 
-    /* ── CŒUR ── */
     const core = document.createElement('div');
     const off = (haloSize - coreSize) / 2;
     const cBlur = (0.5 + coreSize * 0.12).toFixed(1);
@@ -372,32 +367,64 @@ function createFireflies(count = 10) {
         0 0 ${(coreSize * 12).toFixed(1)}px ${pal.core},0.20);
       animation:
         ${anim} ${dur.toFixed(1)}s ${delay.toFixed(1)}s ease-in-out infinite,
-        core-pulse ${pDur.toFixed(1)}s ${(pDelay - 0.5).toFixed(
-      1
-    )}s ease-in-out infinite;
+        core-pulse ${pDur.toFixed(1)}s ${(pDelay - 0.5).toFixed(1)}s ease-in-out infinite;
     `;
     document.body.appendChild(core);
   }
 }
 
-createFireflies(75);
+createFireflies(14);
+
+/* =========================
+   BULLES
+========================= */
+function createBubbles(count = 18) {
+  for (let k = 0; k < count; k++) {
+    const size = 4 + Math.random() * 14;
+    const xPct = Math.random() * 100;
+    const startY = 40 + Math.random() * 60;
+    const drift = (Math.random() - 0.5) * 60;
+    const dur = 14 + Math.random() * 16;
+    const delay = -(Math.random() * dur);
+
+    const bubble = document.createElement('div');
+    bubble.classList.add('bubble');
+    bubble.style.cssText = `
+      width:${size}px;
+      height:${size}px;
+      left:${xPct}vw;
+      top:${startY}vh;
+      --drift:${drift.toFixed(0)}px;
+      animation: bubbleRise ${dur.toFixed(1)}s ${delay.toFixed(1)}s linear infinite;
+    `;
+    document.body.appendChild(bubble);
+  }
+}
+
+createBubbles(18);
 
 /* =========================
    BOUCLE D'ANIMATION
 ========================= */
-
 let lastT = 0;
+let lastWaveUpdate = 0;
+let cachedHeight = syncViewBox();
 
 function animate(t) {
   if (t - lastT >= 16) {
     lastT = t;
 
-    const d = generateWave(t);
-    wavePath.setAttribute('d', d);
-    energyPath.setAttribute('d', d);
+    if (t - lastWaveUpdate > 40) {
+      lastWaveUpdate = t;
+      if (wavePath && energyPath) {
+        const d = generateWave(t, cachedHeight);
+        wavePath.setAttribute('d', d);
+        energyPath.setAttribute('d', d);
+      }
+    }
 
     placeDots();
-    updateEnergy();
+    updateTravelerAuto(t);
   }
 
   requestAnimationFrame(animate);
@@ -408,28 +435,20 @@ requestAnimationFrame(animate);
 /* =========================
    ÉVÉNEMENTS
 ========================= */
-
 window.addEventListener(
   'scroll',
   () => {
-    updateEnergy();
     placeDots();
   },
   { passive: true }
 );
 
 window.addEventListener('resize', () => {
+  cachedHeight = syncViewBox();
   placeDots();
-  updateEnergy();
 });
 
 window.addEventListener('load', () => {
+  cachedHeight = syncViewBox();
   placeDots();
-  updateEnergy();
 });
-
-
-const walker = document.createElement("div");
-walker.classList.add("walker");
-document.body.appendChild(walker);
-

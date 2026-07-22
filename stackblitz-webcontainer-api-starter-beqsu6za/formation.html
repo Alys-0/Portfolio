@@ -2,26 +2,129 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Formation • Alyson Mauzole</title>
+    <!-- Import des polices d'origine -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="styleformat.css" />
   </head>
 
   <body>
-    <!-- BACKGROUND -->
+    <canvas id="jelly-canvas"></canvas>
+    
+   <!-- MÉDUSE LIBRE EN ARRIÈRE-PLAN -->
+    <div id="traveler">
+      <svg class="jelly" viewBox="0 0 300 450" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- Dégradés néons -->
+          <linearGradient id="bellGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#f5d0ff" stop-opacity="0.95"/>
+            <stop offset="45%" stop-color="#c084fc" stop-opacity="0.85"/>
+            <stop offset="85%" stop-color="#e879f9" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.2"/>
+          </linearGradient>
+
+          <radialGradient id="coreGlow" cx="50%" cy="40%" r="50%">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+            <stop offset="40%" stop-color="#f472b6" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="#818cf8" stop-opacity="0"/>
+          </radialGradient>
+
+          <linearGradient id="frillGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
+            <stop offset="60%" stop-color="#f472b6" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#c084fc" stop-opacity="0.1"/>
+          </linearGradient>
+
+          <linearGradient id="tentacleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#eaffff" stop-opacity="0.95"/>
+            <stop offset="35%" stop-color="#7efcff" stop-opacity="0.8"/>
+            <stop offset="70%" stop-color="#38bdf8" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+*/
+        <!-- Cœur brillant -->
+        <circle class="core" cx="150" cy="110" r="35" fill="url(#coreGlow)" />
+
+        <!-- Organes -->
+        <g class="organs" fill="#ffe3f8" opacity="0.45">
+          <circle cx="130" cy="116" r="6"/>
+          <circle cx="150" cy="120" r="7"/>
+          <circle cx="170" cy="116" r="6"/>
+          <circle cx="140" cy="132" r="4"/>
+          <circle cx="160" cy="132" r="4"/>
+        </g>
+
+        <!-- Frills -->
+        <g class="frills">
+          <path d="M125 125 C 130 160, 138 210, 142 240 C 145 200, 148 160, 150 125 Z" fill="url(#frillGrad)"/>
+          <path d="M140 125 C 146 170, 150 230, 154 260 C 158 210, 160 160, 162 125 Z" fill="url(#frillGrad)"/>
+          <path d="M152 125 C 158 160, 164 210, 168 240 C 172 200, 174 160, 178 125 Z" fill="url(#frillGrad)"/>
+        </g>
+
+        <!-- Chapeau -->
+        <path class="bell" d="
+          M 60 130
+          C 60 40, 240 40, 240 130
+          C 240 145, 222 138, 210 145
+          C 198 152, 186 138, 174 145
+          C 162 152, 150 138, 138 145
+          C 126 152, 114 138, 102 145
+          C 90 152, 72 138, 60 130 Z"
+          fill="url(#bellGrad)"
+          stroke="rgba(255, 255, 255, 0.7)"
+          stroke-width="2.5" />
+
+        <!-- Nervures -->
+        <g class="bell-ribs" stroke="rgba(255, 255, 255, 0.4)" stroke-width="1.5" fill="none">
+          <path d="M 150 48 Q 150 90 150 142" />
+          <path d="M 150 48 Q 135 88 126 141" />
+          <path d="M 150 48 Q 120 85 102 140" />
+          <path d="M 150 48 Q 165 88 174 141" />
+          <path d="M 150 48 Q 180 85 198 140" />
+          <path d="M 150 48 Q 90 90 72 128" />
+          <path d="M 150 48 Q 210 90 228 128" />
+        </g>
+
+        <!-- Tentacules arrière -->
+        <g class="tentacles back-tentacles" fill="none" stroke="url(#tentacleGrad)" stroke-width="2" stroke-linecap="round" opacity="0.55">
+          <path d="M 78 140 C 65 190, 90 230, 72 290 C 60 330, 82 360, 68 410" />
+          <path d="M 105 144 C 95 195, 118 235, 100 300 C 90 340, 112 375, 96 430" />
+          <path d="M 195 144 C 205 195, 182 235, 200 300 C 210 340, 188 375, 204 430" />
+          <path d="M 222 140 C 235 190, 210 230, 228 290 C 240 330, 218 360, 232 410" />
+        </g>
+
+        <!-- Tentacules avant -->
+        <g class="tentacles front-tentacles" fill="none" stroke="url(#tentacleGrad)" stroke-width="2.2" stroke-linecap="round">
+          <path d="M 92 144 C 80 200, 104 240, 84 310 C 74 350, 98 385, 80 440" />
+          <path d="M 118 146 C 108 205, 132 245, 112 320 C 102 360, 126 395, 108 445" />
+          <path d="M 182 146 C 192 205, 168 245, 188 320 C 198 360, 174 395, 192 445" />
+          <path d="M 208 144 C 220 200, 196 240, 216 310 C 226 350, 202 385, 220 440" />
+        </g>
+
+        <!-- Tentacule centrale -->
+        <g class="tentacles center-tentacle" fill="none" stroke="url(#tentacleGrad)" stroke-width="2.6" stroke-linecap="round">
+          <path d="M 150 148 C 146 220, 154 280, 148 350 C 144 400, 152 430, 150 460" />
+        </g>
+      </svg>
+    </div>
+
+    <!-- BACKGROUND BLOBS & VIGNETTE -->
     <div class="bg">
       <div class="blob blob1"></div>
       <div class="blob blob2"></div>
-      <div class="blob blob3"></div>
-      <div class="blob blob4"></div>
-      <div class="blob blob5"></div>
-      <div class="blob blob6"></div>
     </div>
+    <div class="vignette"></div>
 
-    <!-- NAV -->
-    <nav>
+    <!-- NAVBAR FORMAT NAVIGATION TOOL (CAPSULE MAMMOTH/AÉRIENNE) -->
+    <nav class="nav-tool">
       <ul>
         <li><a href="index.html">Profil</a></li>
-        <li><a href="formation.html">Formation</a></li>
+        <li><a href="formation.html" class="active">Formation</a></li>
         <li><a href="experience.html">Expérience</a></li>
         <li><a href="projets.html">Projets</a></li>
         <li><a href="artistique.html">Artistique</a></li>
@@ -32,43 +135,37 @@
     <!-- TITLE -->
     <header class="page-title">
       <h1 class="main-title">Mon parcours</h1>
+      <p class="page-subtitle">Du lycée à la licence, étape par étape.</p>
     </header>
 
     <!-- TIMELINE -->
     <section class="timeline">
       <div class="timeline-line">
         <svg viewBox="0 0 100 1000" preserveAspectRatio="none">
-          <path
-            id="wavePath"
-            d="M50 0
-           C30 80 70 160 50 240
-           C30 320 70 400 50 480
-           C30 560 70 640 50 720
-           C30 800 70 880 50 960"
-          />
+          <path id="wavePath" d="M50 0 C30 80 70 160 50 240 C30 320 70 400 50 480 C30 800 70 640 50 720 C30 800 70 880 50 960" />
         </svg>
       </div>
 
-      <!-- EDUCATION -->
-      <div class="timeline-item education" data-link="licence.html">
-        <span class="dot"></span>
+      <!-- EDUCATION ITEMS -->
+      <div class="timeline-item education reveal" data-link="licence.html">
         <div class="content">
+          <span class="eyebrow">Diplôme obtenu</span>
           <h3>Licence GEEB – Obtenu</h3>
           <span class="meta">IUT Montpellier</span>
         </div>
       </div>
 
-      <div class="timeline-item education" data-link="bts.html">
-        <span class="dot"></span>
+      <div class="timeline-item education reveal" data-link="bts.html">
         <div class="content">
+          <span class="eyebrow">Diplôme obtenu</span>
           <h3>BTS FED – Obtenu</h3>
           <span class="meta">Lycée Louise Michel · Narbonne</span>
         </div>
       </div>
 
-      <div class="timeline-item education" data-link="bac.html">
-        <span class="dot"></span>
+      <div class="timeline-item education reveal" data-link="bac.html">
         <div class="content">
+          <span class="eyebrow">Diplôme obtenu</span>
           <h3>BAC Général – Obtenu</h3>
           <span class="meta">Lycée Jean Moulin · Béziers</span>
         </div>
@@ -79,6 +176,6 @@
       <p>© 2026 Alyson Mauzole</p>
     </footer>
 
-    <script src="format.js"></script>
+  <script type="module" src="format.js"></script>
   </body>
 </html>
