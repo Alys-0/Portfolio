@@ -2,31 +2,29 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Formation • Alyson Mauzole</title>
-    <!-- Import des polices d'origine -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="styleformat.css" />
   </head>
 
-
-    <!-- BACKGROUND BLOBS & VIGNETTE -->
+  <body>
+    <!-- BACKGROUND -->
     <div class="bg">
       <div class="blob blob1"></div>
       <div class="blob blob2"></div>
+      <div class="blob blob3"></div>
+      <div class="blob blob4"></div>
+      <div class="blob blob5"></div>
+      <div class="blob blob6"></div>
     </div>
-    <div class="vignette"></div>
 
-    <!-- NAVBAR FORMAT NAVIGATION TOOL (CAPSULE MAMMOTH/AÉRIENNE) -->
+    <!-- NAV -->
     <nav>
       <ul>
         <li><a href="index.html">Profil</a></li>
-        <li><a href="formation.html" class="active">Formation</a></li>
+        <li><a href="formation.html">Formation</a></li>
         <li><a href="experience.html">Expérience</a></li>
         <li><a href="projets.html">Projets</a></li>
+        <li><a href="artistique.html">Artistique</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
@@ -34,37 +32,79 @@
     <!-- TITLE -->
     <header class="page-title">
       <h1 class="main-title">Mon parcours</h1>
-      <p class="page-subtitle">Du lycée à la licence, étape par étape.</p>
     </header>
 
     <!-- TIMELINE -->
     <section class="timeline">
       <div class="timeline-line">
         <svg viewBox="0 0 100 1000" preserveAspectRatio="none">
-          <path id="wavePath" d="M50 0 C30 80 70 160 50 240 C30 320 70 400 50 480 C30 800 70 640 50 720 C30 800 70 880 50 960" />
+          <path
+            id="wavePath"
+            d="M50 0
+           C30 80 70 160 50 240
+           C30 320 70 400 50 480
+           C30 560 70 640 50 720
+           C30 800 70 880 50 960"
+          />
         </svg>
       </div>
+      <h1>Formations </h1>
+      <!-- ITEM -->
+      <div class="timeline-item">
+        <span class="dot"></span>
+        <div class="content">
+          <h3>Apprentie technicienne bureau d’études</h3>
+          <span class="meta"
+            >Largier Technologie <p> 09/2025 – 09/2026 · Montpellier</span
+          >
+          <p>
+            <p> Dimensionnement de système de traitement d'eau</p>
+             <p> conception de réseaux (Schema, plan BIM)</p>
+             <p> realisation de documents techniques (devis,analyse réglementaire,commande,DOE)</p>
+          </p>
+        </div>
+      </div>
 
-      <!-- EDUCATION ITEMS -->
-      <div class="timeline-item" data-url="licence.html">
-        <div class="dot"></div>
-        <div class="content reveal right">
-          <h3>Licence GEEB - Obtenu</h3>
+   <!-- ITEM -->
+   <div class="timeline-item">
+    <span class="dot"></span>
+    <div class="content">
+      <h3>Stage – ACM</h3>
+      <span class="meta">05/2024 – 07/2024 · Béziers</span>
+      <p>
+        <p>Installation, maintenance et dépannage de systèmes de climatisation</p>
+        <p>rédaction de devis et facturation</p>
+          <p>démarchage et  relation client.</p>
+       
+      </p>
+    </div>
+  </div>
+
+      <!-- EDUCATION -->
+    <h1> Education </h1>
+      <div class="timeline-item education">
+      <div class="timeline-item education" data-link="licence.html">
+        <span class="dot"></span>
+        <div class="content">
+          <h3>Licence GEEB – Obtenu</h3>
           <span class="meta">IUT Montpellier</span>
         </div>
       </div>
 
-      <div class="timeline-item" data-url="bts.html">
-        <div class="dot"></div>
-        <div class="content reveal left">
+      <div class="timeline-item education">
+      <div class="timeline-item education" data-link="bts.html">
+        <span class="dot"></span>
+        <div class="content">
           <h3>BTS FED – Obtenu</h3>
           <span class="meta">Lycée Louise Michel · Narbonne</span>
         </div>
       </div>
 
-      <div class="timeline-item" data-url="bac.html">
-        <div class="dot"></div>
-        <div class="content reveal right">
+    
+      <div class="timeline-item education">
+      <div class="timeline-item education" data-link="bac.html">
+        <span class="dot"></span>
+        <div class="content">
           <h3>BAC Général – Obtenu</h3>
           <span class="meta">Lycée Jean Moulin · Béziers</span>
         </div>
@@ -75,6 +115,6 @@
       <p>© 2026 Alyson Mauzole</p>
     </footer>
 
-  <script type="module" src="format.js"></script>
+    <script src="format.js"></script>
   </body>
 </html>
