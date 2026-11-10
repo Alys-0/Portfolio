@@ -22,52 +22,6 @@ body {
 }
 
 /* =========================
-   MÉDUSE EN ARRIÈRE-PLAN FIXED
-========================= */
-#traveler {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 130px;
-  height: 195px;
-  pointer-events: none !important;
-  z-index: 1; /* En arrière-plan derrière le contenu */
-  opacity: 0.85;
-  will-change: transform;
-  transition: opacity 0.4s ease;
-}
-
-#traveler svg.jelly {
-  width: 100% !important;
-  height: 100% !important;
-  display: block;
-  overflow: visible;
-  filter: drop-shadow(0 0 8px #c084fc) drop-shadow(0 0 18px #ff7bc5)
-    drop-shadow(0 0 34px rgba(126, 252, 255, 0.35));
-  transition: filter 0.4s ease;
-  animation: jellyBounce 3.8s cubic-bezier(0.36, 0, 0.66, -0.4) infinite;
-}
-
-/* Pause et brillance féérique au survol */
-#traveler.paused {
-  opacity: 1;
-}
-
-#traveler.paused .bell,
-#traveler.paused .bell-ribs,
-#traveler.paused .core,
-#traveler.paused .organs,
-#traveler.paused .frills path,
-#traveler.paused .tentacles path,
-#traveler.paused svg.jelly {
-  animation-play-state: paused !important;
-}
-
-#traveler.paused svg.jelly {
-  filter: drop-shadow(0 0 18px #ffffff) drop-shadow(0 0 35px #e879f9) brightness(1.3);
-}
-
-/* =========================
    BACKGROUND BLOBS & VIGNETTE
 ========================= */
 .bg {
@@ -110,68 +64,45 @@ body {
   );
 }
 
-/* ==============================================
-   NAVBAR (FORMAT NAVIGATION TOOL / CAPSULE MODERNE)
-============================================== */
-nav.nav-tool {
+/* NAVBAR (Fixe et élégante) */
+nav {
   position: fixed;
-  top: 24px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 10px 24px;
-  background: rgba(14, 26, 20, 0.45);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 40px;
+  top: 0;
+  width: 100%;
+  padding: 18px 0;
+  background: rgba(14, 26, 10, 0.45);
+  backdrop-filter: none;
   z-index: 1000;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3),
-              inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-nav.nav-tool:hover {
-  background: rgba(14, 26, 20, 0.65);
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4),
-              0 0 20px rgba(192, 132, 252, 0.2);
-}
-
-nav.nav-tool ul {
+nav ul {
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 22px;
+  gap: 30px;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-nav.nav-tool a {
+nav a {
   color: #ffffff;
   text-decoration: none;
-  font-size: 0.88rem;
-  font-weight: 500;
+  font-size: 0.95rem;
   letter-spacing: 1px;
-  opacity: 0.65;
+  opacity: 0.7;
   transition: 0.3s ease;
-  padding: 6px 12px;
-  border-radius: 20px;
 }
 
-nav.nav-tool a:hover,
-nav.nav-tool a.active {
+nav a:hover, nav a.active {
   opacity: 1;
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.08);
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 /* =========================
    TITLE
 ========================= */
 .page-title {
-  padding-top: 140px;
+  padding-top: 180px;
   text-align: center;
   margin-bottom: 0;
   position: relative;
@@ -202,7 +133,7 @@ nav.nav-tool a.active {
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
-  padding: 80px 0 140px;
+  padding: 40px 0 140px;
   z-index: 2;
 }
 
@@ -252,7 +183,15 @@ nav.nav-tool a.active {
 .timeline-item {
   position: relative;
   display: flex;
-  margin: 80px 0;
+  margin: 120px;
+}
+
+.timeline-item:first-child {
+  margin-top: 20px;
+}
+
+.timeline-item:nth-child(2) {
+  margin-bottom: 100px;
 }
 
 .timeline-item:last-child {
@@ -282,17 +221,21 @@ nav.nav-tool a.active {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(10px);
-  transition: transform 0.35s ease, background 0.35s ease, box-shadow 0.35s ease;
+  /* Transition fluide pour le zoom et les effets */
+  transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+    background 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
   cursor: pointer;
 }
 
+/* Survol de base (quand la carte n'est pas active) */
 .content:hover {
-  transform: translateY(-3px);
+  transform: scale(1.03) translateY(-4px);
   background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 0 2px rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
+/* État actif via le scroll */
 .timeline-item.active .content {
   transform: scale(1.025) translateY(-3px);
   background: linear-gradient(
@@ -305,27 +248,18 @@ nav.nav-tool a.active {
     0 0 60px color-mix(in srgb, var(--color) 7%, transparent);
 }
 
+/* Quand la carte est active ET qu'on passe la souris dessus (effet rapprochement / zoom "grid") */
 .timeline-item.active .content:hover {
-  transform: scale(1.05) translateY(-3px);
-  box-shadow: 0 0 30px color-mix(in srgb, var(--color) 28%, transparent),
-    0 0 80px color-mix(in srgb, var(--color) 10%, transparent);
+  transform: scale(1.06) translateY(-5px);
+  box-shadow: 0 0 35px color-mix(in srgb, var(--color) 40%, transparent),
+    0 0 80px color-mix(in srgb, var(--color) 15%, transparent);
+  border-color: color-mix(in srgb, var(--color) 65%, transparent);
 }
 .content h3 {
   margin: 0 0 8px;
   font-size: 1.1rem;
   line-height: 1.35;
   color: #ffffff;
-}
-
-.eyebrow {
-  display: block;
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 1.6px;
-  text-transform: uppercase;
-  color: color-mix(in srgb, var(--color, #c084fc) 75%, white);
-  opacity: 0.85;
-  margin-bottom: 6px;
 }
 
 .meta {
@@ -406,82 +340,6 @@ footer {
 }
 
 /* =========================
-   ANIMATIONS MÉDUSE & EFFETS
-========================= */
-.bell, .bell-ribs {
-  transform-origin: 150px 88px;
-  animation: jellyBreath 3.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-}
-
-.core {
-  transform-origin: 150px 110px;
-  animation: coreGlowPulse 3.8s ease-in-out infinite;
-}
-
-@keyframes jellyBreath {
-  0%   { transform: scale(1, 1); }
-  42%  { transform: scale(0.84, 1.16); }
-  100% { transform: scale(1, 1); }
-}
-
-@keyframes jellyBounce {
-  0%   { transform: translateY(0); }
-  42%  { transform: translateY(18px); }
-  100% { transform: translateY(0); }
-}
-
-@keyframes coreGlowPulse {
-  0%, 100% { opacity: 0.55; transform: scale(0.92); }
-  42%      { opacity: 1;    transform: scale(1.12); }
-}
-
-.frills path {
-  transform-origin: 150px 125px;
-  animation: frillsWave 3.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-}
-
-@keyframes frillsWave {
-  0%   { transform: scaleY(1); }
-  42%  { transform: scaleY(1.12); }
-  100% { transform: scaleY(1); }
-}
-
-.tentacles {
-  mix-blend-mode: screen;
-}
-
-.tentacles path {
-  transform-origin: 150px 140px;
-  animation: tentacleSway 4.6s ease-in-out infinite;
-}
-
-@keyframes tentacleSway {
-  0%   { transform: rotate(0deg); }
-  50%  { transform: rotate(-8deg); }
-  100% { transform: rotate(0deg); }
-}
-
-.back-tentacles path:nth-child(1)  { animation-delay: 0s; }
-.back-tentacles path:nth-child(2)  { animation-delay: 0.5s; }
-.back-tentacles path:nth-child(3)  { animation-delay: 1s; }
-.back-tentacles path:nth-child(4)  { animation-delay: 1.5s; }
-
-.front-tentacles path:nth-child(1) { animation-delay: 0.25s; }
-.front-tentacles path:nth-child(2) { animation-delay: 0.75s; }
-.front-tentacles path:nth-child(3) { animation-delay: 1.25s; }
-.front-tentacles path:nth-child(4) { animation-delay: 1.75s; }
-
-.center-tentacle path {
-  animation-delay: 1s;
-  animation-duration: 5.4s;
-}
-
-.organs {
-  transform-origin: 150px 122px;
-  animation: frillsWave 3.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-}
-
-/* =========================
    LUCIOLES & BULLES
 ========================= */
 .firefly {
@@ -491,61 +349,88 @@ footer {
 }
 
 @keyframes float-a {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  18% { transform: translate(11px, -17px) scale(1.09); }
-  38% { transform: translate(-8px, 11px) scale(0.92); }
-  60% { transform: translate(15px, 6px) scale(1.06); }
-  82% { transform: translate(-6px, -10px) scale(0.96); }
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  18% {
+    transform: translate(11px, -17px) scale(1.09);
+  }
+  38% {
+    transform: translate(-8px, 11px) scale(0.92);
+  }
+  60% {
+    transform: translate(15px, 6px) scale(1.06);
+  }
+  82% {
+    transform: translate(-6px, -10px) scale(0.96);
+  }
 }
 
 @keyframes float-b {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  22% { transform: translate(-15px, 9px) scale(1.08); }
-  52% { transform: translate(9px, -15px) scale(0.9); }
-  76% { transform: translate(17px, 7px) scale(1.05); }
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  22% {
+    transform: translate(-15px, 9px) scale(1.08);
+  }
+  52% {
+    transform: translate(9px, -15px) scale(0.9);
+  }
+  76% {
+    transform: translate(17px, 7px) scale(1.05);
+  }
 }
 
 @keyframes float-c {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  30% { transform: translate(7px, 19px) scale(0.94); }
-  65% { transform: translate(-12px, -7px) scale(1.09); }
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  30% {
+    transform: translate(7px, 19px) scale(0.94);
+  }
+  65% {
+    transform: translate(-12px, -7px) scale(1.09);
+  }
 }
 
 @keyframes float-d {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(-9px, -18px) scale(1.07); }
-  50% { transform: translate(13px, 5px) scale(0.93); }
-  75% { transform: translate(-5px, 14px) scale(1.04); }
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(-9px, -18px) scale(1.07);
+  }
+  50% {
+    transform: translate(13px, 5px) scale(0.93);
+  }
+  75% {
+    transform: translate(-5px, 14px) scale(1.04);
+  }
 }
 
 @keyframes orb-pulse {
-  0%, 100% { opacity: 0.06; }
-  45% { opacity: 0.78; }
-  55% { opacity: 0.82; }
+  0%,
+  100% {
+    opacity: 0.06;
+  }
+  45% {
+    opacity: 0.78;
+  }
+  55% {
+    opacity: 0.82;
+  }
 }
 
 @keyframes core-pulse {
-  0%, 100% { opacity: 0.25; }
-  50% { opacity: 1; }
-}
-
-.bubble {
-  position: fixed;
-  border-radius: 50%;
-  pointer-events: none;
-  background: radial-gradient(
-    circle at 35% 30%,
-    rgba(255, 255, 255, 0.5),
-    rgba(160, 230, 255, 0.12) 60%,
-    transparent 75%
-  );
-  border: 1px solid rgba(180, 235, 255, 0.15);
-  z-index: 0;
-}
-
-@keyframes bubbleRise {
-  0% { transform: translate(0, 0); opacity: 0; }
-  10% { opacity: 0.5; }
-  90% { opacity: 0.35; }
-  100% { transform: translate(var(--drift, 20px), -110vh); opacity: 0; }
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
 }

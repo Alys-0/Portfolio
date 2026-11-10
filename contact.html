@@ -2,19 +2,22 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <title>Portfolio Alyson Mauzole</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact : Alyson Mauzole</title>
     <link rel="stylesheet" href="stylecontact.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;500;700&family=Space+Grotesk:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
   </head>
 
   <body>
+    <canvas id="jelly-canvas"></canvas>
+
     <!-- BACKGROUND -->
     <div class="bg">
       <div class="blob blob1"></div>
       <div class="blob blob2"></div>
-      <div class="blob blob3"></div>
-      <div class="blob blob4"></div>
-      <div class="blob blob5"></div>
-      <div class="blob blob6"></div>
     </div>
 
     <!-- NAVBAR -->
@@ -24,34 +27,69 @@
         <li><a href="formation.html">Formation</a></li>
         <li><a href="experience.html">Expérience</a></li>
         <li><a href="projets.html">Projets</a></li>
-        <li><a href="artistique.html">Artistique</a></li>
-        <li><a href="contact.html">Contact</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
       </ul>
     </nav>
 
-    <!-- HEADER -->
-
     <!-- CONTACT -->
-    <section>
-      <h2>Contact</h2>
-      <p>Email : mauzole.alyson00@gmail.com</p>
-    </section>
+    <main class="contact-wrapper">
+      <section class="contact-card">
+        <h2>Me Contacter</h2>
 
-    <section class="socials">
-      <h2>Suivez-moi</h2>
-      <div class="social-icons">
-        <a href="https://discord.com" target="_blank"><img src="discord.png" alt="Discord"></a>
-        <a href="https://instagram.com" target="_blank"><img src="instagram.png" alt="Instagram"></a>
-        <a href="https://youtube.com" target="_blank"><img src="youtube.png" alt="YouTube"></a>
-        <a href="https://x.com" target="_blank"><img src="x.png" alt="X"></a>
-        <a href="https://www.linkedin.com/in/alyson-mauzole-a99783408" target="_blank"><img src="linkedin.png" alt="LinkedIn"></a>
-      </div>
-    </section>
+        <p class="intro-text">
+          Pour toute opportunité professionnelle, échange technique ou projet,
+          vous pouvez me joindre directement par e-mail ou via mes réseaux
+          ci-dessous.
+        </p>
+
+        <!-- EMAIL & STATUT -->
+        <div class="direct-contact">
+          <div class="contact-box">
+            <span class="label">Adresse E-mail</span>
+            <a href="mailto:mauzole.alyson00@gmail.com" class="email-link"
+              >mauzole.alyson00@gmail.com</a
+            >
+          </div>
+
+          <div class="contact-box">
+            <span class="label">Statut Actuel</span>
+            <p class="status-badge">
+              <span>•</span> En recherche d'opportunités
+            </p>
+          </div>
+        </div>
+
+        <!-- RESEAUX SOCIAUX -->
+        <div class="socials-section">
+          <h3>Réseaux sociaux</h3>
+          <div class="social-icons">
+            <a
+              href="https://www.linkedin.com/in/alyson-mauzole-a99783408"
+              target="_blank"
+              rel="noopener"
+              title="LinkedIn"
+            >
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW6kACFvc_QmjY4wwKzNUEDY36htg4Omyw0JbsLfU9bQ&s=10" alt="LinkedIn" />
+            </a>
+          
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener"
+              title="Instagram"
+            >
+              <img src="https://toppng.com/uploads/preview/instagram-pn-11545512109emc1gjwvjg.png" alt="Instagram" />
+            </a>
+          
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
 
     <footer>
       <p>© 2026 Alyson Mauzole</p>
     </footer>
-
+    <script type="module" src="contact.js"></script>
   </body>
-  </html>
 </html>

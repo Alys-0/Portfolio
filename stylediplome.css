@@ -1,22 +1,25 @@
 html {
   scroll-behavior: smooth;
 }
-/* BODY */
+/* BODY (Exactement le même fond vert forêt que ton index) */
 body {
   margin: 0;
   font-family: 'Space Grotesk', sans-serif;
   color: #f3f4f6;
-  background: radial-gradient(circle at 30% 30%, #064e3b, #022c22 60%, #021412);
+  background: radial-gradient(circle at 30% 30%, #043b2d, #021b15 60%, #021412);
   overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* BACKGROUND BLOBS */
-
+/* BACKGROUND BLOBS (Tes nuances violet/sombre) */
 .bg {
   position: fixed;
   mix-blend-mode: screen;
   inset: 0;
   z-index: -1;
+  pointer-events: none;
 }
 
 .blob {
@@ -28,78 +31,53 @@ body {
 }
 
 .blob1 {
-  background: rgba(101, 76, 241, 0.3);
-  top: -200px;
-  left: -200px;
+  background: rgba(117, 16, 126, 0.65);
+  top: -150px;
+  left: -150px;
 }
 
 .blob2 {
-  background: rgba(221, 88, 54, 0.521);
-  bottom: -200px;
-  right: -200px;
-  opacity: 0.8;
-}
-
-.blob3 {
-  background: rgba(243, 228, 19, 0.856);
-  top: 120%;
-  left: 120%;
-}
-
-.blob4 {
-  background: rgba(134, 95, 11, 0.281);
-  bottom: 80%;
-  left: 0%;
-}
-
-.blob5 {
-  background: white;
-  opacity: 0.12;
-  top: 16%;
-  right: 10%;
-}
-
-.blob6 {
-  background: rgba(38, 0, 255, 0.486);
-  opacity: 0.35;
-  top: 8%;
-  right: 5%;
+  background: rgba(4, 19, 11, 0.8);
+  bottom: -150px;
+  right: -150px;
 }
 
 /* =========================
    NAV
 ========================= */
-
 nav {
   position: fixed;
   top: 0;
   width: 100%;
-  padding: 14px 0;
+  padding: 18px 0;
   background: rgba(14, 26, 10, 0.45);
-  backdrop-filter: blur(18px);
+  backdrop-filter: none;
   z-index: 1000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 nav ul {
   display: flex;
   justify-content: center;
-  gap: 28px;
+  gap: 30px;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
 nav a {
-  color: white;
+  color: #ffffff;
   text-decoration: none;
-  font-size: 0.88rem;
-  opacity: 0.65;
-  transition: 0.3s;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  opacity: 0.7;
+  transition: 0.3s ease;
 }
 
-nav a:hover {
+nav a:hover, nav a.active {
   opacity: 1;
 }
+
 
 /*Section*/
 

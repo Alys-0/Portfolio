@@ -1,3 +1,8 @@
+:root {
+  --bg-dark: #021412;
+  --text-light: #f3f4f6;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -7,18 +12,27 @@ html {
 body {
   margin: 0;
   font-family: 'Space Grotesk', sans-serif;
-  color: #f3f4f6;
-  background: radial-gradient(circle at 30% 30%, #064e3b, #022c22 60%, #021412);
+  color: var(--text-light);
+  background: radial-gradient(
+    circle at 30% 30%,
+    #043b2d,
+    #021b15 60%,
+    var(--bg-dark)
+  );
+
   overflow-x: hidden;
+  position: relative;
 }
 
-/* BACKGROUND BLOBS */
-
+/* =========================
+   BACKGROUND BLOBS & VIGNETTE
+========================= */
 .bg {
   position: fixed;
   mix-blend-mode: screen;
   inset: 0;
-  z-index: -1;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .blob {
@@ -30,39 +44,15 @@ body {
 }
 
 .blob1 {
-  background: rgba(117, 16, 126, 0.911);
+  background: rgba(117, 16, 126, 0.65);
   top: -150px;
   left: -150px;
 }
 
 .blob2 {
-  background: rgba(231, 61, 18, 0.74);
+  background: rgba(4, 19, 11, 0.8);
   bottom: -150px;
   right: -150px;
-}
-
-.blob3 {
-  background: rgba(243, 228, 19, 0.247);
-  top: 50%;
-  left: 50%;
-}
-
-.blob4 {
-  background: rgba(134, 95, 11, 0.281);
-  bottom: 20%;
-  left: 30%;
-}
-.blob5 {
-  background: white;
-  opacity: 0.3;
-  top: 9%;
-  right: 10%;
-}
-.blob6 {
-  background: rgba(38, 0, 255, 0.486);
-  opacity: 0.35;
-  top: 8%;
-  right: 5%;
 }
 
 /* NAVBAR */
@@ -76,7 +66,7 @@ nav {
   backdrop-filter: none;
   transition: 0.5s ease;
   z-index: 1000;
-  padding: 14px 0;
+  padding: 18px 0;
 }
 
 nav.nav-visible {
@@ -84,13 +74,16 @@ nav.nav-visible {
   transform: translateY(0);
   background: rgba(14, 26, 10, 0.45);
   backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 nav ul {
   display: flex;
   justify-content: center;
+  gap: 35px;
   list-style: none;
   margin: 0;
+  padding: 0;
 }
 
 nav li {
@@ -100,10 +93,13 @@ nav li {
 nav a {
   color: rgb(255, 255, 255);
   text-decoration: none;
-  opacity: 0.8;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  opacity: 0.75;
+  transition: 0.3s ease;
 }
 
-nav a:hover {
+nav a:hover, nav a.active {
   opacity: 1;
 }
 
@@ -125,7 +121,6 @@ nav a:hover {
   inset: 0;
   background: url('https://media.cdnws.com/_i/309/fb%7B630%7D-10451/2289/55/plante-bureau.png')
     center/cover no-repeat;
-
   /* effet fondu pro */
   filter: brightness(0.58) contrast(1.1);
 }
@@ -135,7 +130,6 @@ nav a:hover {
   content: '';
   position: absolute;
   inset: 0;
-
   background: radial-gradient(
     circle at center,
     rgba(6, 78, 59, 0.6),
@@ -164,12 +158,9 @@ nav a:hover {
   width: 280px;
   height: 360px;
   object-fit: cover;
-
   border-radius: 20px;
-
   /* cadre pro */
   border: 2px solid rgba(255, 255, 255, 0.1);
-
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(255, 255, 255, 0.05);
 }
 
@@ -179,9 +170,10 @@ nav a:hover {
 }
 
 .small {
-  font-size: 12px;
+  font-size: 0.85rem;
   letter-spacing: 3px;
-  opacity: 0.7;
+  opacity: 0.8;
+  color: #e5e7eb;
 }
 
 .signature {
@@ -195,11 +187,8 @@ nav a:hover {
   content: '';
   position: absolute;
   inset: -10px;
-
   border-radius: 24px;
-
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
-
   z-index: -1;
 }
 
@@ -216,19 +205,46 @@ nav a:hover {
   position: relative;
 }
 
-h2 {
+#profile h2 {
   font-family: 'Cormorant Garamond', serif;
   font-size: 2.3em;
 }
 
-p {
+#profile p {
   line-height: 1.7;
+  font-size: 1.05rem;
+  color: #ffffff;
+  margin-bottom: 20px;
 }
 
+#profile p.intro {
+  font-size: 1.15rem;
+  color: #ffffff;
+}
 /* FOOTER */
 
 footer {
   text-align: center;
-  padding: 30px;
+  padding: 40px 20px;
+  font-size: 0.9rem;
   opacity: 0.6;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* RESPONSIVE (POUR MOBILES & TABLETTES) */
+@media (max-width: 850px) {
+  .hero-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 30px;
+  }
+
+  .signature {
+    font-size: 4rem;
+  }
+
+  #profile {
+    margin: 20px;
+    padding: 30px;
+  }
 }
