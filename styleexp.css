@@ -1,26 +1,26 @@
+@@ -0,0 +1,231 @@
+html {
+  scroll-behavior: smooth;
+}
+/* BODY */
+
 html {
   scroll-behavior: smooth;
 }
 
-/* BODY */
 body {
-  margin: 0;
   font-family: 'Space Grotesk', sans-serif;
-  color: #f3f4f6;
-  background: radial-gradient(circle at 30% 30%, #043b2d, #021b15 60%, #021412);
+  background: #022c22;
+  color: white;
   overflow-x: hidden;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
 }
 
-/* BACKGROUND BLOBS (Tes nuances violet/sombre) */
+/* BACKGROUND BLOBS */
+
 .bg {
   position: fixed;
-  mix-blend-mode: screen;
   inset: 0;
   z-index: -1;
-  pointer-events: none;
 }
 
 .blob {
@@ -32,51 +32,61 @@ body {
 }
 
 .blob1 {
-  background: rgba(117, 16, 126, 0.65);
+  background: rgba(168, 85, 247, 0.3);
   top: -150px;
   left: -150px;
 }
 
 .blob2 {
-  background: rgba(4, 19, 11, 0.8);
+  background: rgba(236, 72, 153, 0.3);
   bottom: -150px;
   right: -150px;
+}
+
+.blob3 {
+  background: rgba(34, 211, 238, 0.3);
+  top: 50%;
+  left: 50%;
+}
+
+.blob4 {
+  background: rgba(59, 130, 246, 0.25);
+  bottom: 20%;
+  left: 30%;
 }
 
 /* =========================
    NAV
 ========================= */
+
 nav {
   position: fixed;
   top: 0;
   width: 100%;
-  padding: 18px 0;
+  padding: 14px 0;
   background: rgba(14, 26, 10, 0.45);
-  backdrop-filter: none;
+  backdrop-filter: blur(18px);
   z-index: 1000;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 nav ul {
   display: flex;
   justify-content: center;
-  gap: 30px;
+  gap: 28px;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
 nav a {
-  color: #ffffff;
+  color: white;
   text-decoration: none;
-  font-size: 0.95rem;
-  letter-spacing: 1px;
-  opacity: 0.7;
-  transition: 0.3s ease;
+  font-size: 0.88rem;
+  opacity: 0.65;
+  transition: 0.3s;
 }
 
-nav a:hover,
-nav a.active {
+nav a:hover {
   opacity: 1;
 }
 
@@ -115,7 +125,7 @@ section {
   border-radius: 12px;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  transition: 0.3s;
+  transition: 0.3s
 }
 
 section:hover {
