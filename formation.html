@@ -1,125 +1,80 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>Formation • Alyson Mauzole</title>
-  <link rel="stylesheet" href="styleformat.css">
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formation • Alyson Mauzole</title>
+    <!-- Import des polices d'origine -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styleformat.css" />
+  </head>
 
-<body>
 
-<!-- BACKGROUND -->
-<div class="bg">
-  <div class="blob blob1"></div>
-  <div class="blob blob2"></div>
-  <div class="blob blob3"></div>
-</div>
-
-<!-- NAV -->
-<nav>
-  <ul>
-    <li><a href="index.html">Profil</a></li>
-    <li><a href="formation.html">Formation</a></li>
-    <li><a href="experience.html">Expérience</a></li>
-    <li><a href="projets.html">Projets</a></li>
-    <li><a href="artistique.html">Artistique</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
-</nav>
-
-<!-- TITLE -->
-<header class="page-title">
-  <h1 class="main-title">Mon parcours</h1>
-  <p class="subtitle">Du lycée à la licence, étape par étape.</p>
-</header>
-
-<!-- TIMELINE -->
-<section class="timeline">
-
-  <div class="timeline-line">
-    <svg viewBox="0 0 100 1000" preserveAspectRatio="none">
-      <path
-        id="wavePath"
-        d="M50 0 C25 80 75 160 50 240 C25 320 75 400 50 480 C25 560 75 640 50 720 C25 800 75 880 50 960"
-      />
-    </svg>
-  </div>
-
-  <!-- ITEM RIGHT -->
-  <div class="timeline-item right">
-    <div class="content">
-      <h3>Apprentie technicienne bureau d'études</h3>
-      <span class="meta">
-        Largier Technologie · 09/2025 – 09/2026 · Montpellier
-      </span>
-      <p>
-        Modélisation et dimensionnement CVC, conception de réseaux fluidiques,
-        documents techniques (plans, DOE), réunions de synthèse,
-        analyse réglementaire.
-      </p>
+    <!-- BACKGROUND BLOBS & VIGNETTE -->
+    <div class="bg">
+      <div class="blob blob1"></div>
+      <div class="blob blob2"></div>
     </div>
-  </div>
+    <div class="vignette"></div>
 
-  <!-- ITEM LEFT -->
-  <div class="timeline-item left">
-    <div class="content">
-      <h3>Stage – ACM</h3>
-      <span class="meta">
-        05/2024 – 07/2024 · Béziers
-      </span>
-      <p>
-        Installation, maintenance et dépannage de systèmes de climatisation,
-        rédaction de devis et facturation, relation client.
-      </p>
-    </div>
-  </div>
+    <!-- NAVBAR FORMAT NAVIGATION TOOL (CAPSULE MAMMOTH/AÉRIENNE) -->
+    <nav>
+      <ul>
+        <li><a href="index.html">Profil</a></li>
+        <li><a href="formation.html" class="active">Formation</a></li>
+        <li><a href="experience.html">Expérience</a></li>
+        <li><a href="projets.html">Projets</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
 
-  <!-- ITEM RIGHT -->
-  <div class="timeline-item right">
-    <div class="content">
-      <h3>Licence GEEB – Obtenu</h3>
-      <span class="meta">IUT Montpellier</span>
-    </div>
-  </div>
+    <!-- TITLE -->
+    <header class="page-title">
+      <h1 class="main-title">Mon parcours</h1>
+      <p class="page-subtitle">Du lycée à la licence, étape par étape.</p>
+    </header>
 
-  <!-- ITEM LEFT -->
-  <div class="timeline-item left">
-    <div class="content">
-      <h3>BTS FED – Obtenu</h3>
-      <span class="meta">
-        Lycée Louise Michel · Narbonne
-      </span>
-    </div>
-  </div>
+    <!-- TIMELINE -->
+    <section class="timeline">
+      <div class="timeline-line">
+        <svg viewBox="0 0 100 1000" preserveAspectRatio="none">
+          <path id="wavePath" d="M50 0 C30 80 70 160 50 240 C30 320 70 400 50 480 C30 800 70 640 50 720 C30 800 70 880 50 960" />
+        </svg>
+      </div>
 
-  <!-- ITEM RIGHT -->
-  <div class="timeline-item right">
-    <div class="content">
-      <h3>Stage de découverte – Leader Price</h3>
-      <span class="meta">2020 · Béziers</span>
-      <p>
-        Accueil client, mise en rayon, gestion des stocks,
-        organisation et propreté du point de vente.
-      </p>
-    </div>
-  </div>
+      <!-- EDUCATION ITEMS -->
+      <div class="timeline-item" data-url="licence.html">
+        <div class="dot"></div>
+        <div class="content reveal right">
+          <h3>Licence GEEB - Obtenu</h3>
+          <span class="meta">IUT Montpellier</span>
+        </div>
+      </div>
 
-  <!-- ITEM LEFT -->
-  <div class="timeline-item left">
-    <div class="content">
-      <h3>BAC Général – Obtenu</h3>
-      <span class="meta">
-        Lycée Jean Moulin · Béziers
-      </span>
-    </div>
-  </div>
+      <div class="timeline-item" data-url="bts.html">
+        <div class="dot"></div>
+        <div class="content reveal left">
+          <h3>BTS FED – Obtenu</h3>
+          <span class="meta">Lycée Louise Michel · Narbonne</span>
+        </div>
+      </div>
 
-</section>
+      <div class="timeline-item" data-url="bac.html">
+        <div class="dot"></div>
+        <div class="content reveal right">
+          <h3>BAC Général – Obtenu</h3>
+          <span class="meta">Lycée Jean Moulin · Béziers</span>
+        </div>
+      </div>
+    </section>
 
-<footer>
-  <p>© 2026 Alyson Mauzole</p>
-</footer>
+    <footer>
+      <p>© 2026 Alyson Mauzole</p>
+    </footer>
 
-<script src="format.js"></script>
-</body>
+  <script type="module" src="format.js"></script>
+  </body>
 </html>
